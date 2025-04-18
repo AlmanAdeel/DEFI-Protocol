@@ -1,6 +1,7 @@
 //SPDX-License-Identifier: MIT
 
 pragma solidity ^0.8.25;
+
 import {AggregatorV3Interface} from "@chainlink/contracts/src/v0.8/shared/interfaces/AggregatorV3Interface.sol";
 /*
  * @title OrcaleLib 
@@ -12,17 +13,22 @@ import {AggregatorV3Interface} from "@chainlink/contracts/src/v0.8/shared/interf
  * So if chainlink network explodes and you have a alot of money locked
  */
 
-
-library  OrcaleLib {
+library OrcaleLib {
     uint256 private constant TIMEOUT = 3 hours; // 3 * 60 * 60
+
     error OrcaleLib__StalePrice();
-    function stalePriceCheckLatestRoundData(AggregatorV3Interface priceFeed) public view returns(uint88,int256,uint256,uint256,uint88){
-        (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound) =priceFeed.latestRoundData();
+
+    function stalePriceCheckLatestRoundData(AggregatorV3Interface priceFeed)
+        public
+        view
+        returns (uint88, int256, uint256, uint256, uint88)
+    {
+        (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound) =
+            priceFeed.latestRoundData();
         uint256 secondsSince = block.timestamp - updatedAt;
-        if (secondsSince > TIMEOUT){
+        if (secondsSince > TIMEOUT) {
             revert OrcaleLib__StalePrice();
         }
-    return (roundId,answer,startedAt,updatedAt,answeredInRound);
-    
+        return (roundId, answer, startedAt, updatedAt, answeredInRound);
     }
 }

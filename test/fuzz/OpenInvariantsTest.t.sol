@@ -1,7 +1,7 @@
 // //SPDX-License-Identifier: MIT
 // //Have properties that should always hold
 
-// //What are our invariants ? 
+// //What are our invariants ?
 
 // //1.  The total supply of DSC should be less than the total value of collateral
 // //2. Getter view functions should never revert <- evergreen invariant
@@ -27,7 +27,6 @@
 //         (,,weth,wbtc,) = config.activeNetworkConfig();
 //         targetContract(address(dsce));
 //     }
-
 
 //     function invariant_protocolMustHaveMoreValueThanTotalSupply() public view{
 //         //get the value of all the collateral in the protocol
